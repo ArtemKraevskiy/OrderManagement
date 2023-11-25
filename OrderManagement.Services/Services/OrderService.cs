@@ -45,6 +45,13 @@ namespace OrderManagement.Services.Services
             }
 
             var entities = await _orderRepository.GetAsync(mainPpredicate);
+
+            if (!string.IsNullOrEmpty(searchModel.Unit))
+            {
+                var ids = await _orderItemService.GetOrderIdsByUnitAsync(searchModel.Unit);
+                entities = entities.Where(_ => ids.Contains(_.Id));
+            }
+
             var models = _mapper.Map<List<OrderDto>>(entities.ToList());
             foreach (var model in models)
             {
@@ -128,7 +135,8 @@ namespace OrderManagement.Services.Services
         {
             return new OrderSearchViewModel
             {
-                Providers = await _providerService.GetSelectListAsync()
+                Providers = await _providerService.GetSelectListAsync(),
+                Units = await _orderItemService.GetUnitsSelectListAsync(),
             };
         }
     }

@@ -1,4 +1,5 @@
-﻿using OrderManagement.Models.DataTransferObjects;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using OrderManagement.Models.DataTransferObjects;
 using OrderManagement.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -13,5 +14,7 @@ namespace OrderManagement.Services.Abstractions
         Task DeleteRangeAsync(int orderId);
         Task<List<OrderItemDto>> GetAsync(int orderId);
         void SetSerialNumbers(List<OrderItemViewModel> models);
+        Task<List<SelectListItem>> GetUnitsSelectListAsync();
+        Task<List<int>> GetOrderIdsByUnitAsync(string unit);
     }
 }

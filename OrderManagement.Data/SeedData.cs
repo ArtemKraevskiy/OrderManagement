@@ -134,6 +134,122 @@ namespace OrderManagement.Data
                                 }
                             }
                         }
+                    },
+                    new Provider
+                    {
+                        Name = "Новый поставщик",
+                        Orders = new List<Order> {
+                            new Order
+                            {
+                                Number = "2a",
+                                Date = new DateTime(2023, 11, 01),
+                                OrderItems = new List<OrderItem>
+                                {
+                                    new OrderItem
+                                    {
+                                        Name = "Предмет 13",
+                                        Quantity = 150,
+                                        Unit = "Метр"
+                                    },
+                                    new OrderItem
+                                    {
+                                        Name = "Предмет 14",
+                                        Quantity = 175,
+                                        Unit = "Метр"
+                                    },
+                                    new OrderItem
+                                    {
+                                        Name = "Предмет 15",
+                                        Quantity = 1.152m,
+                                        Unit = "Киломметр"
+                                    }
+                                }
+                            },
+                            new Order
+                            {
+                                Number = "2b",
+                                Date = new DateTime(2023, 10, 15),
+                                OrderItems = new List<OrderItem>
+                                {
+                                    new OrderItem
+                                    {
+                                        Name = "Предмет 16",
+                                        Quantity = 4,
+                                        Unit = "Упаковка"
+                                    },
+                                    new OrderItem
+                                    {
+                                        Name = "Предмет 17",
+                                        Quantity = 11,
+                                        Unit = "Флакон"
+                                    },
+                                    new OrderItem
+                                    {
+                                        Name = "Предмет 18",
+                                        Quantity = 15,
+                                        Unit = "Флакон"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    new Provider
+                    {
+                        Name = "Ещё один какой-то поставщик",
+                        Orders = new List<Order> {
+                            new Order
+                            {
+                                Number = "1a",
+                                Date = new DateTime(2023, 11, 15),
+                                OrderItems = new List<OrderItem>
+                                {
+                                    new OrderItem
+                                    {
+                                        Name = "Предмет 19",
+                                        Quantity = 10,
+                                        Unit = "Штука"
+                                    },
+                                    new OrderItem
+                                    {
+                                        Name = "Предмет 20",
+                                        Quantity = 20,
+                                        Unit = "Штука"
+                                    },
+                                    new OrderItem
+                                    {
+                                        Name = "Предмет 21",
+                                        Quantity = 25,
+                                        Unit = "Штука"
+                                    }
+                                }
+                            },
+                            new Order
+                            {
+                                Number = "1b",
+                                Date = new DateTime(2023, 11, 13),
+                                OrderItems = new List<OrderItem>
+                                {
+                                    new OrderItem
+                                    {
+                                        Name = "Предмет 22",
+                                        Quantity = 5,
+                                        Unit = "Литр"
+                                    },
+                                    new OrderItem
+                                    {
+                                        Name = "Предмет 23",
+                                        Quantity = 7.15m,
+                                        Unit = "Литр"
+                                    },
+                                    new OrderItem
+                                    {
+                                        Name = "Предмет 24",
+                                        Quantity = 18.4m,
+                                        Unit = "Килограмм"
+                                    }
+                                }
+                            }
+                        }
                     }
                 );
                 context.SaveChanges();

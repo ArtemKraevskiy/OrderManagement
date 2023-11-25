@@ -17,6 +17,12 @@
     }
     <div class="mb-3 row">
         <div class="col-sm-4">
+            <label>Единицы измерения элементов заказов:</label>
+            @Html.DropDownListFor(model => model.Unit, Model?.Units ?? new List<SelectListItem>(), new { @class = "form-select", @multiple = "multiple" })
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <div class="col-sm-4">
             <label>Номер заказа:</label>
             @Html.TextBoxFor(model => model.Number, new { @class = "form-control" })
         </div>
