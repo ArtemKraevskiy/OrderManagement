@@ -1,0 +1,31 @@
+﻿@model OrderManagement.Models.ViewModels.OrderSearchViewModel
+
+@using (Html.BeginForm("Index", "Order", FormMethod.Post, new { id = "orderSearchForm" }))
+{
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div class="d-flex">
+            <label for="startDate" class="me-3">Период:</label>
+            @Html.TextBoxFor(model => model.StartDate, "{0:yyyy-MM-dd}", new { @class = "form-control me-3", @type="date", @onchange="reloadOrderTable()"})
+            @Html.TextBoxFor(model => model.EndDate, "{0:yyyy-MM-dd}", new { @class = "form-control", @type="date", @onchange="reloadOrderTable()" })
+        </div>
+    </div>
+
+    @for (var i = 0; i < Model?.Providers.Count(); i++)
+    {
+        @Html.HiddenFor(model => model.Providers[i].Value)
+        @Html.HiddenFor(model => model.Providers[i].Text)
+    }
+    <div class="mb-3 row">
+        <div class="col-sm-4">
+            <label>Номер заказа:</label>
+            @Html.TextBoxFor(model => model.Number, new { @class = "form-control" })
+        </div>
+        <div class="col-sm-4">
+            <label>Выбор поставщика:</label>
+            @Html.DropDownListFor(model => model.ProviderId, Model?.Providers ?? new List<SelectListItem>(), new { @class = "form-select" })
+        </div>
+        <div class="col-sm-2 d-flex align-items-end">
+            <button type="button" class="btn btn-primary ml-auto" onclick="reloadOrderTable()">Применить</button>
+        </div>
+    </div>
+}

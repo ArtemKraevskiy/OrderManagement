@@ -1,0 +1,25 @@
+﻿@model OrderManagement.Models.ViewModels.OrderItemViewModel
+
+@{
+    ViewData.TemplateInfo.HtmlFieldPrefix = $"OrderItems[{Model.SerialNumber}]";
+}
+
+<tr @(Model.IsDeleted ? "style=display:none" : "")>
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.IsDeleted)
+    <td class="col-sm-4">
+        <div>@Html.TextBoxFor(model => model.Name)</div>
+        <div>@Html.ValidationMessageFor(model => model.Name)</div>
+    </td>
+    <td class="col-sm-3">
+        <div>@Html.TextBoxFor(model => model.Quantity)</div>
+        <div>@Html.ValidationMessageFor(model => model.Quantity)</div>
+    </td>
+    <td class="col-sm-4">
+        <div>@Html.TextBoxFor(model => model.Unit)</div>
+        <div>@Html.ValidationMessageFor(model => model.Unit)</div>
+    </td>
+    <td class="col-sm-1">
+        <a href="#" onclick="orderItemDelete(event)">Удалить</a>
+    </td>
+</tr>

@@ -1,0 +1,84 @@
+﻿@model OrderManagement.Models.DataTransferObjects.OrderDto
+
+@Html.HiddenFor(model => model.Id)
+<div class="table-responsive" style="margin-bottom: 20px">
+    <table class="table">
+        <tbody>
+            <tr>
+                <td style="width:40%">Id:</td>
+                <td>@Model.Id</td>
+            </tr>
+            <tr>
+                <td>Номер:</td>
+                <td>@Model.Number</td>
+            </tr>
+            <tr>
+                <td>Дата:</td>
+                <td>@Model.Date</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-responsive border p-2" style="margin-bottom: 20px">
+    <h5>Поставщик</h5>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td style="width:40%">Id:</td>
+                <td>@Model.Provider.Id</td>
+            </tr>
+            <tr>
+                <td>Наименование:</td>
+                <td>@Model.Provider.Name</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="table-responsive border p-2 mb-3">
+    <h5>Элементы заказа</h5>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Наименование</th>
+                <th scope="col">Количество</th>
+                <th scope="col">Единица измерения</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var orderItem in Model.OrderItems)
+            {
+                <tr>
+                    <td>@orderItem.Id</td>
+                    <td>@orderItem.Name</td>
+                    <td>@orderItem.Quantity</td>
+                    <td>@orderItem.Unit</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="modal-footer">
+    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Редактировать</a>
+    <button type="button" class="btn btn-danger" onclick="orderDelete(@Model.Id)">Удалить</button>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+</div>
+
+<script type="text/javascript">
+    function orderDelete(orderId) {
+        if (confirm('Вы действительно хотите удалить заказ?')) {
+            var url = '@Url.Action("Delete", "Order")';
+            $.ajax({
+                url: url,
+                data: { orderId },
+                success: function (response) {
+                    var modal = document.getElementById('orderDetailsModal');
+                    var modalInstance = bootstrap.Modal.getInstance(modal);
+                    modalInstance.hide();
+                    reloadOrderTable();
+                    confirm(response);
+                },
+            });
+        }
+    }
+</script>

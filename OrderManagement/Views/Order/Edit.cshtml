@@ -1,0 +1,81 @@
+﻿@using OrderManagement.Models.DataTransferObjects;
+@model OrderManagement.Models.ViewModels.OrderViewModel
+
+@{
+    ViewData["Title"] = "Редактирование заказа";
+}
+
+@using (Html.BeginForm("Edit", "Order", FormMethod.Post, new { @class = "form-horizontal", id = "orderEditForm" }))
+{
+    <div class="col-sm-8 mx-auto mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="display-4">@(Model.Id > 0 ? Html.Raw("Редактирование заказа") : Html.Raw("Создание заказа"))</h1>
+        </div>
+        @Html.HiddenFor(model => model.Id)
+        @for(var i = 0; i < Model.Providers.Count(); i++)
+        {
+            @Html.HiddenFor(model => model.Providers[i].Value)
+            @Html.HiddenFor(model => model.Providers[i].Text)
+        }
+        <div class="mb-3 row">
+            <label class="col-sm-3 form-label">Номер заказа:</label>
+            <div class="col-sm-9">
+                @Html.TextBoxFor(model => model.Number, new { @class = "form-control", @onblur =  "NumberValidation()" })
+                @Html.ValidationMessageFor(model => model.Number)
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label class="col-sm-3 form-label">Дата заказа:</label>
+            <div class="col-sm-3">
+                @Html.TextBoxFor(model => model.Date, "{0:yyyy-MM-dd}", new { @class = "form-control", @type="date" })
+                @Html.ValidationMessageFor(model => model.Date)
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label class="col-sm-3 form-label">Выбор поставщика:</label>
+            <div class="col-sm-9">
+                @Html.DropDownListFor(model => model.ProviderId, Model.Providers, new { @class = "form-select", @onchange = "NumberValidation()" })
+                @Html.ValidationMessageFor(model => model.ProviderId)
+            </div>
+        </div>
+        <div class="mb-3 row border p-3" @*id="orderItemTableContainer" data-url="@Html.Raw(Url.Action("List", "OrderItem"))"*@>
+            @await Html.PartialAsync("~/Views/OrderItem/Partial/_orderItemTable.cshtml", Model.OrderItems)
+        </div>
+        <div class="d-flex justify-content-end mt-4">
+            <a href="@Html.Raw(Url.Action("Index","Order"))" class="btn btn-secondary ml-auto m-2">Отменить</a>
+            <input type="submit" class="btn btn-primary ml-auto m-2" value="Сохранить" id="editOrderBut" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        function NumberValidation() {
+            $.ajax({
+                url: "@Url.Action("NumberValidation", "Order")",
+                data: {
+                    Id: $('#Id').val(),
+                    Number: $('#Number').val(),
+                    ProviderId: $('#ProviderId').val()
+                },
+                type: "Post",
+                success: function (response) {
+                    if (!response) {
+                        $('[data-valmsg-for="Number"]').text("Выбранному поставщику уже соответствует заказ с введённым номером").addClass("field-validation-error");
+                        $('[data-valmsg-for="ProviderId"]').text("Выбранному поставщику уже соответствует заказ с введённым номером").addClass("field-validation-error");
+                        $('#editOrderBut').prop('disabled', true);
+                    }
+                    else {
+                        $('[data-valmsg-for="Number"]').text(null).removeClass("field-validation-error");
+                        $('[data-valmsg-for="ProviderId"]').text(null).removeClass("field-validation-error");
+                        $('#editOrderBut').prop('disabled', false);
+                    }
+                },
+                error: function (exception) {
+                    confirm("Ошибка! Не удалось проверить валидность данных!");
+                    $('#editOrderBut').prop('disabled', true);
+                }
+            });
+        }
+    </script>
+}

@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Заказы";
+}
+
+<h1 class="display-4">Заказы</h1>
+
+<div id="orderSearchContainer" data-url="@Html.Raw(Url.Action("SearchModel", "Order"))"></div>
+
+<div id="orderTableContainer" data-url="@Html.Raw(Url.Action("List", "Order"))"></div>
+
+<div class="d-flex justify-content-end">
+    <a class="btn btn-primary ml-auto m-2" asp-action="Edit">Добавить заказ</a>
+</div>
+
+<div class="modal" tabindex="-1" id="orderDetailsModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Информация о заказе</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body" id="orderDetailsBody" data-url="@Html.Raw(Url.Action("Details", "Order"))"></div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#SearchModel_Number').on('keypress', function (e) {
+                if (e.which === 13) {
+                    e.preventDefault();
+                    reloadOrderTable();
+                }
+            });
+            reloadOrderTable();
+            reloadOrderSearchForm();
+        });
+    </script>
+}

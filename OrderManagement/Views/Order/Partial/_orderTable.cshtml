@@ -1,0 +1,31 @@
+﻿@model List<OrderManagement.Models.DataTransferObjects.OrderDto>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Номер заказа</th>
+            <th scope="col">Дата заказа</th>
+            <th scope="col">Поставщик</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr onclick="tableOrderRowClick(@order.Id)">
+                <td>@order.Id</td>
+                <td>@order.Number</td>
+                <td>@order.Date</td>
+                <td>@order.Provider.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    function tableOrderRowClick(orderId) {
+        reloadOrderDetails(orderId)
+    }
+</script>
+
+

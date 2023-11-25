@@ -1,0 +1,37 @@
+﻿@model List<OrderManagement.Models.ViewModels.OrderItemViewModel>
+
+<h5>Элементы заказа</h5>
+<table class="table mb-1" id="orderItemsTable" data-url="@Html.Raw(Url.Action("Create", "OrderItem"))">
+    <thead>
+        <tr>
+            <th scope="col">Наименование</th>
+            <th scope="col">Количество</th>
+            <th scope="col">Единица измерения</th>
+            <th scope="col">Действие</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (var i = 0; i < Model.Count(); i++)
+        {
+            @await Html.PartialAsync("~/Views/OrderItem/Partial/_orderItemEditForm.cshtml", Model[i])
+        }
+    </tbody>
+</table>
+<div class="d-flex justify-content-end">
+    <button type="button" class="btn btn-primary ml-auto btn-sm m-1" onclick="orderItemAdd()">Добавить элемент</button>
+</div>
+
+<script type="text/javascript">
+    function orderItemAdd() {
+        var serialNumber = $('#orderItemsTable tbody tr').length;
+        var url = $('#orderItemsTable').data('url');
+        $.get(url, { SerialNumber: serialNumber }, function (data) {
+            $('#orderItemsTable tbody').append(data);
+        });
+    }
+    function orderItemDelete(event) {
+        var row = event.currentTarget.closest('tr');
+        $(row).hide();
+        $('[id*="IsDeleted"]', row).val(true);
+    }
+</script>

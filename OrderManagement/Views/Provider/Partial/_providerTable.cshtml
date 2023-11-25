@@ -1,0 +1,19 @@
+﻿@model List<OrderManagement.Models.DataTransferObjects.ProviderDto>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Наименование поставщика</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var provider in Model)
+        {
+            <tr>
+                <td>@provider.Id</td>
+                <td>@provider.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
