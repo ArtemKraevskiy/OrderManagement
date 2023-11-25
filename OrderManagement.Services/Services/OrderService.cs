@@ -98,6 +98,7 @@ namespace OrderManagement.Services.Services
 
         public async Task CreateAsync(OrderViewModel model)
         {
+            model.OrderItems.RemoveAll(_ => _.Id == 0 && _.IsDeleted);
             var newEntity = _mapper.Map<Order>(model);
             await _orderRepository.CreateAsync(newEntity);
             await _orderRepository.CommitAsync();

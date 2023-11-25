@@ -22,7 +22,6 @@ namespace OrderManagement.Models.ViewModels
         public string Number { get; set; }
         [Required(ErrorMessage = "Обязательное поле")]
         public DateTime Date { get; set; }
-        [Range(1, int.MaxValue, ErrorMessage = "Обязательное поле")]
         public int ProviderId { get; set; }
 
         [ValidateNever]

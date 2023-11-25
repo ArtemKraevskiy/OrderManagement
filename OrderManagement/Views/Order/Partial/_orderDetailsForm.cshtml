@@ -70,7 +70,7 @@
             var url = '@Url.Action("Delete", "Order")';
             $.ajax({
                 url: url,
-                data: { orderId },
+                data: {Id: orderId} ,
                 success: function (response) {
                     var modal = document.getElementById('orderDetailsModal');
                     var modalInstance = bootstrap.Modal.getInstance(modal);

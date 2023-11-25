@@ -6,6 +6,7 @@
 
 <tr @(Model.IsDeleted ? "style=display:none" : "")>
     @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.SerialNumber)
     @Html.HiddenFor(model => model.IsDeleted)
     <td class="col-sm-4">
         <div>@Html.TextBoxFor(model => model.Name)</div>
